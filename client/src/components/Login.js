@@ -16,17 +16,11 @@ const Login = () => {
     password: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [loginState, setLoginState] = useState({ email: '', password: '' });
+  const [login, { error: loginError, data: loginData }] = useMutation(LOGIN_USER);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
 
-    setDataSignUp({
-      ...dataSignUp,
-      [name]: value,
-    });
-  };
-
-  const handleFormSubmit = async (event) => {
+  const handleSignupFormSubmit = async (event) => {
     event.preventDefault();
     console.log(dataSignUp);
 
@@ -36,15 +30,77 @@ const Login = () => {
       });
 
       Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  const handleLoginFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(loginState);
+
+    try {
+      const { data } = await login({
+        variables: { ...loginState },
+      });
+
+      Auth.login(data.login.token);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoginState({
+      email: '',
+      password: '',
+    });
+  };
+
+  const handleSignupFormChange = (event) => {
+    const { name, value } = event.target;
+
+    setDataSignUp({
+      ...dataSignUp,
+      [name]: value,
+    });
+  };
+
+  const handleLoginFormChange = (event) => {
+    const { name, value } = event.target;
+
+    setLoginState({
+      ...loginState,
+      [name]: value,
+    });
+  };
+
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+
+  //   setDataSignUp({
+  //     ...dataSignUp,
+  //     [name]: value,
+  //   });
+  // };
+
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
+  //   console.log(dataSignUp);
+
+  //   try {
+  //     const { data } = await addUser({
+  //       variables: { ...dataSignUp },
+  //     });
+
+  //     Auth.login(data.addUser.token);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   if (authMode === 'signin') {
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={handleFormSubmit}>
+      <form className="Auth-form" onSubmit={handleSignupFormSubmit}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
@@ -61,7 +117,7 @@ const Login = () => {
               className="form-control mt-1"
               placeholder="Username"
               value={dataSignUp.username}
-              onChange={handleChange}
+              onChange={handleSignupFormChange}
             />
           </div>
           <div className="form-group mt-3">
@@ -72,7 +128,7 @@ const Login = () => {
               className="form-control mt-1"
               placeholder="Email Address"
               value={dataSignUp.email}
-              onChange={handleChange}
+              onChange={handleSignupFormChange}
             />
           </div>
           <div className="form-group mt-3">
@@ -83,7 +139,7 @@ const Login = () => {
               className="form-control mt-1"
               placeholder="Password"
               value={dataSignUp.password}
-              onChange={handleChange}
+              onChange={handleSignupFormChange}
             />
           </div>
           <div className="d-grid gap-2 mt-3">
@@ -103,7 +159,7 @@ const Login = () => {
 
 return (
   <div className="Auth-form-container">
-    <form className="Auth-form" onSubmit={handleFormSubmit}>
+    <form className="Auth-form" onSubmit={handleLoginFormSubmit}>
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Sign In</h3>
         <div className="text-center">
@@ -119,8 +175,8 @@ return (
             name="email"
             className="form-control mt-1"
             placeholder="Enter email"
-            // value={loginState.email}
-            onChange={handleChange}
+            value={loginState.email}
+            onChange={handleLoginFormChange}
           />
         </div>
         <div className="form-group mt-3">
@@ -130,8 +186,8 @@ return (
             name="password"
             className="form-control mt-1"
             placeholder="Enter password"
-            // value={loginState.password}
-            onChange={handleChange}
+            value={loginState.password}
+            onChange={handleLoginFormChange}
           />
         </div>
         <div className="d-grid gap-2 mt-3">
