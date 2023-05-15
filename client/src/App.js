@@ -22,14 +22,15 @@ function App() {
 
     window.addEventListener("popstate", handleRouteChange);
 
-const client = new ApolloClient({
-  uri: '/graphql',
-  cache: new InMemoryCache()
-})
-
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+  })
+}
 
 function App() {
- return (
+  return (
     <div className="App">
       <Header />
       <main>
