@@ -100,7 +100,7 @@ const Login = () => {
   if (authMode === 'signin') {
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={handleFormSubmit}>
+      <form className="Auth-form" onSubmit={handleSignupFormSubmit}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
@@ -159,7 +159,7 @@ const Login = () => {
 
 return (
   <div className="Auth-form-container">
-    <form className="Auth-form" onSubmit={handleFormSubmit}>
+    <form className="Auth-form" onSubmit={handleLoginFormSubmit}>
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Sign In</h3>
         <div className="text-center">
