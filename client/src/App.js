@@ -1,4 +1,5 @@
 import React from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
 import Login from "./components/Login";
@@ -9,10 +10,23 @@ import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+
+
+function App() {
+  const [route, setRoute] = React.useState(window.location.pathname);
+
+  React.useEffect(() => {
+    const handleRouteChange = () => {
+      setRoute(window.location.pathname);
+    };
+
+    window.addEventListener("popstate", handleRouteChange);
+
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache()
 })
+
 
 function App() {
  return (
