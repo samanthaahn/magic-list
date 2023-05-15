@@ -15,30 +15,7 @@ const client = new ApolloClient({
 })
 
 function App() {
-  // const [route, setRoute] = React.useState(window.location.pathname);
-
-  // React.useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     setRoute(window.location.pathname);
-  //   };
-
-  //   window.addEventListener("popstate", handleRouteChange);
-
-  //   return () => {
-  //     window.removeEventListener("popstate", handleRouteChange);
-  //   };
-  // }, []);
-
-  // const renderRoute = () => {
-  //   switch (route) {
-  //     case "/":
-  //       return <Login />;
-  //     default:
-  //       return <Login />;
-  //   }
-  // };
-
-  return (
+ return (
     <div className="App">
       <Header />
       <main>
