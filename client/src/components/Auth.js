@@ -1,18 +1,17 @@
-import React, { useState } from "react"
-import Auth from '../../utils/auth'
+import React, { useState } from "react";
+import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
-import { ADD_USER, LOGIN_USER } from '../utils/mutations';
+import { ADD_USER, LOGIN_USER } from '../../utils/mutations';
 
-const Signup = () => {
-    const [dataSignUp, setDataSignUp] = useState({
-      username: '',
-      email: '',
-      password: '',
-    });
-    const [addUser, { error, data }] = useMutation(ADD_USER);
-}  
+const Signup = ({ changeAuthMode }) => {
+  const [dataSignUp, setDataSignUp] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
-const handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     setDataSignUp({
@@ -36,124 +35,48 @@ const handleChange = (event) => {
     }
   };
 
-  const Login = (props) => {
-    const [loginState, setLoginState] = useState({ email: '', password: '' });
-    const [login, { error, data }] = useMutation(LOGIN_USER);
-  
-    // update state based on form input changes
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-  
-      setLoginState({
-        ...setLoginState,
-        [name]: value,
-      });
-    };
-  
-    // submit form
-    const handleFormSubmit = async (event) => {
-      event.preventDefault();
-      console.log(loginState);
-      try {
-        const { data } = await login({
-          variables: { ...loginState },
-        });
-  
-        Auth.login(data.login.token);
-      } catch (e) {
-        console.error(e);
-      }
-  
-      // clear form values
-      setFormState({
-        email: '',
-        password: '',
-      });
-    };
-  }
-    
-export default function (props) {
-  let [authMode, setAuthMode] = useState("signin")
-
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin")
-  }
-
-  if (authMode === "signin") {
-    return (
-      <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign In</h3>
-            <div className="text-center">
-              Not registered yet?{" "}
-              <span className="link-primary" onClick={handleChange}>
-                Sign Up
-              </span>
-            </div>
-            <div className="form-group mt-3">
-              <label>Email address</label>
-              <input
-                type="email"
-                className="form-control mt-1"
-                placeholder="Enter email"
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Enter password"
-              />
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
-            </div>
-            <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
-            </p>
-          </div>
-        </form>
-      </div>
-    )
-  }
-
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={handleFormSubmit}>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-primary" onClick={handleFormSubmit}>
+            <span className="link-primary" onClick={changeAuthMode}>
               Sign In
             </span>
           </div>
           <div className="form-group mt-3">
-            <label>Full Name</label>
+            <label>Username</label>
             <input
-              type="email"
+              type="text"
+              name="username"
               className="form-control mt-1"
-              placeholder="e.g Jane Doe"
+              placeholder="Username"
+              value={dataSignUp.username}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group mt-3">
             <label>Email address</label>
             <input
               type="email"
+              name="email"
               className="form-control mt-1"
               placeholder="Email Address"
+              value={dataSignUp.email}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
             <input
               type="password"
+              name="password"
               className="form-control mt-1"
               placeholder="Password"
+              value={dataSignUp.password}
+              onChange={handleChange}
             />
           </div>
           <div className="d-grid gap-2 mt-3">
@@ -167,5 +90,65 @@ export default function (props) {
         </div>
       </form>
     </div>
-  )
+  );
+};
+
+return (
+  <div className="Auth-form-container">
+    <form className="Auth-form" onSubmit={handleFormSubmit}>
+      <div className="Auth-form-content">
+        <h3 className="Auth-form-title">Sign In</h3>
+        <div className="text-center">
+          Not registered yet?{" "}
+          <span className="link-primary" onClick={changeAuthMode}>
+            Sign Up
+          </span>
+        </div>
+        <div className="form-group mt-3">
+          <label>Email address</label>
+          <input
+            type="email"
+            name="email"
+            className="form-control mt-1"
+            placeholder="Enter email"
+            value={loginState.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group mt-3">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            className="form-control mt-1"
+            placeholder="Enter password"
+            value={loginState.password}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="d-grid gap-2 mt-3">
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </div>
+        <p className="text-center mt-2">
+          Forgot <a href="#">password?</a>
+        </p>
+      </div>
+    </form>
+  </div>
+);
+
+export default function AuthForm(props) {
+let [authMode, setAuthMode] = useState('signin');
+
+const changeAuthMode = () => {
+  setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
+};
+
+if (authMode === 'signin') {
+  return <Signup changeAuthMode={changeAuthMode} />;
+}
+
+return <Login changeAuthMode={changeAuthMode} />;
 }
