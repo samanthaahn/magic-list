@@ -4,7 +4,7 @@ import Auth from "./components/Auth";
 import Week from "./components/Week";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Dashboard from "./components/Dashboard/Dashboard";
+//import Dashboard from "./components/Dashboard/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
