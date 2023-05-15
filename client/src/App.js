@@ -10,6 +10,10 @@ import "./App.css";
 
 function App() {
   const [route, setRoute] = React.useState(window.location.pathname);
+  const client = new ApolloClient({
+    uri: "/graphql",
+    cache: new InMemoryCache(),
+  });
 
   React.useEffect(() => {
     const handleRouteChange = () => {
@@ -18,10 +22,9 @@ function App() {
 
     window.addEventListener("popstate", handleRouteChange);
 
-    const client = new ApolloClient({
-      uri: "/graphql",
-      cache: new InMemoryCache(),
-    });
+    return () => {
+      window.removeEventListener("popstate", handleRouteChange);
+    };
   }, []);
 
   return (
