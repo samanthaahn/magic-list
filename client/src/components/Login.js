@@ -3,7 +3,13 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 
-const Signup = ({ changeAuthMode }) => {
+const Login = () => {
+  let [authMode, setAuthMode] = useState('signin');
+
+  const changeAuthMode = () => {
+    setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
+  };
+
   const [dataSignUp, setDataSignUp] = useState({
     username: '',
     email: '',
@@ -35,6 +41,7 @@ const Signup = ({ changeAuthMode }) => {
     }
   };
 
+  if (authMode === 'signin') {
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleFormSubmit}>
@@ -91,6 +98,7 @@ const Signup = ({ changeAuthMode }) => {
       </form>
     </div>
   );
+  }
 
 
 return (
@@ -111,7 +119,7 @@ return (
             name="email"
             className="form-control mt-1"
             placeholder="Enter email"
-            value={loginState.email}
+            // value={loginState.email}
             onChange={handleChange}
           />
         </div>
@@ -122,7 +130,7 @@ return (
             name="password"
             className="form-control mt-1"
             placeholder="Enter password"
-            value={loginState.password}
+            // value={loginState.password}
             onChange={handleChange}
           />
         </div>
@@ -140,16 +148,4 @@ return (
 );
 };
 
-export default function AuthForm(props) {
-let [authMode, setAuthMode] = useState('signin');
-
-const changeAuthMode = () => {
-  setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
-};
-
-if (authMode === 'signin') {
-  return <Signup changeAuthMode={changeAuthMode} />;
-}
-
-return <Login changeAuthMode={changeAuthMode} />;
-}
+export default Login;
