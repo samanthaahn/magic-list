@@ -1,15 +1,11 @@
-require('dotenv').config();
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 
-//This is necessary so that my app can run and be used
-const sequelize = process.env.JAWSDB_URL
-  ? new Sequelize(process.env.JAWSDB_URL)
-  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-      host: 'localhost',
-      dialect: 'mysql',
-      dialectOptions: {
-        decimalNumbers: true,
-      },
-    });
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/programming-thoughts',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
-module.exports = sequelize;
+module.exports = mongoose.connection;
