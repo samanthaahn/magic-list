@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import Auth from '../../utils/auth'
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 
 const Signup = () => {
-    const [formState, setFormState] = useState({
+    const [dataSignUp, setDataSignUp] = useState({
       username: '',
       email: '',
       password: '',
@@ -15,19 +15,19 @@ const Signup = () => {
 const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setFormState({
-      ...formState,
+    setDataSignUp({
+      ...dataSignUp,
       [name]: value,
     });
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    console.log(dataSignUp);
 
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: { ...dataSignUp },
       });
 
       Auth.login(data.addUser.token);
@@ -37,15 +37,15 @@ const handleChange = (event) => {
   };
 
   const Login = (props) => {
-    const [formState, setFormState] = useState({ email: '', password: '' });
+    const [loginState, setLoginState] = useState({ email: '', password: '' });
     const [login, { error, data }] = useMutation(LOGIN_USER);
   
     // update state based on form input changes
     const handleChange = (event) => {
       const { name, value } = event.target;
   
-      setFormState({
-        ...formState,
+      setLoginState({
+        ...setLoginState,
         [name]: value,
       });
     };
@@ -53,10 +53,10 @@ const handleChange = (event) => {
     // submit form
     const handleFormSubmit = async (event) => {
       event.preventDefault();
-      console.log(formState);
+      console.log(loginState);
       try {
         const { data } = await login({
-          variables: { ...formState },
+          variables: { ...loginState },
         });
   
         Auth.login(data.login.token);
@@ -87,7 +87,7 @@ export default function (props) {
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
               Not registered yet?{" "}
-              <span className="link-primary" onClick={changeAuthMode}>
+              <span className="link-primary" onClick={handleChange}>
                 Sign Up
               </span>
             </div>
@@ -128,7 +128,7 @@ export default function (props) {
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
+            <span className="link-primary" onClick={handleFormSubmit}>
               Sign In
             </span>
           </div>
