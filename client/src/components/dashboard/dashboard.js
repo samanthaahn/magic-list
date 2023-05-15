@@ -6,6 +6,7 @@ import prj2 from '../../images/week.jpg';
 import prj3 from '../../images/month.jpg';
 import prj4 from '../../images/history.jpg';
 import './Dashboard.css'; // import the CSS file
+import MyCalendar from '../calendar/calendar';
 
 const Dashboard = () => {
   // Actual projects data
@@ -22,6 +23,7 @@ const Dashboard = () => {
       <section className="portfolio">
         <h2>Welcome back, USERNAME!</h2>
         <div className="projects-container">
+          <MyCalendar />
           {projects.map((project, index) => (
             <Project key={index} {...project} />
           ))}

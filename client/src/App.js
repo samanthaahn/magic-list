@@ -1,4 +1,5 @@
 import React from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Week from "./components/Week";
@@ -7,6 +8,7 @@ import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
 
 function App() {
   const [route, setRoute] = React.useState(window.location.pathname);
