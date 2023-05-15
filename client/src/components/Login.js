@@ -73,29 +73,6 @@ const Login = () => {
     });
   };
 
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-
-  //   setDataSignUp({
-  //     ...dataSignUp,
-  //     [name]: value,
-  //   });
-  // };
-
-  // const handleFormSubmit = async (event) => {
-  //   event.preventDefault();
-  //   console.log(dataSignUp);
-
-  //   try {
-  //     const { data } = await addUser({
-  //       variables: { ...dataSignUp },
-  //     });
-
-  //     Auth.login(data.addUser.token);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
 
   if (authMode === 'signin') {
   return (
