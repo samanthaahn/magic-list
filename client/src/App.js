@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Auth from "./components/Auth";
+import Login from "./components/Login";
 import Week from "./components/Week";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -26,9 +26,9 @@ function App() {
   const renderRoute = () => {
     switch (route) {
       case "/":
-        return <Auth />;
+        return <Login />;
       default:
-        return <Auth />;
+        return <Login />;
     }
   };
 
@@ -38,7 +38,7 @@ function App() {
       <main>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Auth />} />
+            <Route path="/" element={<Login />} />
             <Route path="/week" element={<Week />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
