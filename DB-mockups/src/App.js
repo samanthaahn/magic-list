@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Auth from "./components/Auth";
-import Week from "./components/Week";
+import Login from "./components/Login";
+import Today from "./components/Today/Today";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -26,9 +26,9 @@ function App() {
   const renderRoute = () => {
     switch (route) {
       case "/":
-        return <Auth />;
+        return <Login />;
       default:
-        return <Auth />;
+        return <Login />;
     }
   };
 
@@ -38,9 +38,9 @@ function App() {
       <main>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Auth />} />
-            <Route path="/week" element={<Week />} />
+            <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/today" element={<Today />} />
           </Routes>
         </BrowserRouter>
       </main>
