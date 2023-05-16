@@ -1,15 +1,16 @@
-.portfolio {
-  max-width: 600px;
+.today-main {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Add this line to center the column horizontally */
+  height: 100vh;
 }
 
-.projects-container {
-  display: grid;
-  grid-template-columns: 1fr; /* Update this line */
-  grid-gap: 20px;
-  justify-items: center;
-  max-width: 1000px;
+.today-container {
+  display: flex;
+  flex-direction: column; /* Add this line to create a column */
+  align-items: center;
 }
 
-h2 {
-  text-align: center;
+.today-container > *:not(:last-child) {
+  margin-bottom: 20px;
 }
