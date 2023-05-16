@@ -1,12 +1,12 @@
 const db = require('../config/connection');
-const { User, Habit, DiaryComment } = require('../models');
+const { User, Habit, Diary } = require('../models');
 const userSeeds = require('./userSeeds.json');
 const habitSeeds = require('./habitSeeds.json');
 const diarySeeds = require('./diarySeeds.json');
 
 db.once('open', async () => {
   try {
-    await DiaryComment.deleteMany({});
+    await Diary.deleteMany({});
     await Habit.deleteMany({});
     await User.deleteMany({});
 
@@ -25,12 +25,12 @@ db.once('open', async () => {
     }
 
     for (let i = 0; i < diarySeeds.length; i++) {
-      const { _id, habitId } = await DiaryComment.create(diarySeeds[i]);
+      const { _id, habitId } = await Diary.create(diarySeeds[i]);
       const habit = await Habit.findOneAndUpdate(
         { _id: habitId },
         {
           $addToSet: {
-            diaryComments: _id,
+            diary: _id,
           },
         }
       );
