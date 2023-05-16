@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Week from "./components/Week";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Diary from "./components/Diary";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -37,6 +38,7 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/week" element={<Week />} />
               {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+              <Route path="/diary" element={<Diary />} />
             </Routes>
           </BrowserRouter>
         </ApolloProvider>
