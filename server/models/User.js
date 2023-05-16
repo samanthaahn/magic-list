@@ -28,6 +28,12 @@ const userSchema = new Schema({
             ref: 'Habit',
         },
     ],
+    diaries: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Diary',
+        },
+    ],
 });
 
 userSchema.pre('save', async function (next) {
