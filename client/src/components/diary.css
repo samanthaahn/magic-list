@@ -19,16 +19,23 @@
   }
   
   .entry-input {
-    flex-grow: 1;
-    padding: 8px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
+    resize: vertical;
+    height: 200px; /* Set the desired height here */
+    box-sizing: border-box; /* Include padding in the total height */
+    line-height: normal; /* Reset line-height */
+    vertical-align: text-top; /* Align the text at the top of the input box */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
   }
-  
+
   .add-entry-button {
     margin-left: 10px;
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #05182c;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -36,12 +43,18 @@
   }
   
   .entry-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
   }
   
   .entry-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .delete-entry-button {
+    margin-left: 10px;
+    align-self: flex-end;
   }

@@ -52,7 +52,7 @@ const Diary = () => {
     <div className="journal-container">
       <h1 className="journal-title">Good or Bad, write how you're feeling</h1>
       <div className="entry-form">
-        <input
+        <textarea
           type="text"
           ref={fieldRef}
           className="entry-input"
