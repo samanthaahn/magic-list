@@ -30,15 +30,20 @@ const Diary = () => {
 
     const storeEntry = () => {
       if (newEntry.trim() !== '') {
+        const entry = {
+          text: newEntry,
+          date: moment().format('MMM D, YYYY, h:mm:ss a'),
+        };
+    
         if (editIndex !== -1) {
           const updatedEntries = [...entries];
-          updatedEntries[editIndex] = newEntry;
+          updatedEntries[editIndex] = entry;
           setEntries(updatedEntries);
           setEntriesToStorage(updatedEntries);
           setNewEntry('');
           setEditIndex(-1);
         } else {
-          const updatedEntries = [newEntry, ...entries];
+          const updatedEntries = [entry, ...entries];
           setEntries(updatedEntries);
           setEntriesToStorage(updatedEntries);
           setNewEntry('');
@@ -53,7 +58,7 @@ const Diary = () => {
     };
 
     const editEntry = (index) => {
-      setNewEntry(entries[index]);
+      setNewEntry(entries[index].text);
       setEditIndex(index);
       fieldRef.current.focus();
     };
@@ -77,17 +82,20 @@ const Diary = () => {
         </button>
       </div>
       <ul className="entry-list">
-        {entries.map((entry, index) => (
-          <li key={index} className="entry-item">
-            <span className="entry-text" onClick={() => editEntry(index)}>
-              {entry}
-            </span>
-            <button onClick={() => removeEntry(index)} className="delete-entry-button">
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+  {entries.map((entry, index) => (
+    <li key={index} className="entry-item">
+      <div className="entry-text-container">
+        <span className="entry-date">{entry.date}</span>
+        <span className="entry-text" onClick={() => editEntry(index)}>
+          {entry.text}
+        </span>
+      </div>
+      <button onClick={() => removeEntry(index)} className="delete-entry-button">
+        Delete
+      </button>
+    </li>
+  ))}
+</ul>
     </div>
   );
 };
