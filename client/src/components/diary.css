@@ -1,0 +1,74 @@
+.journal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .journal-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .entry-form {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .entry-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+    height: 200px; /* Set the desired height here */
+    box-sizing: border-box; /* Include padding in the total height */
+    line-height: normal; /* Reset line-height */
+    vertical-align: text-top; /* Align the text at the top of the input box */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
+  }
+
+  .add-entry-button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #05182c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .entry-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .entry-item {
+    margin-bottom: 20px;
+  }
+  
+  .entry-text-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .entry-date {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .entry-text {
+    cursor: pointer;
+  }
+  
+  .delete-entry-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
