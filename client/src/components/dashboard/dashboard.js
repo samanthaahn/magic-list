@@ -5,7 +5,7 @@ import prj1 from '../../images/today.jpg';
 import prj2 from '../../images/week.jpg';
 import prj3 from '../../images/month.jpg';
 import prj4 from '../../images/history.jpg';
-import './Dashboard.css'; // import the CSS file
+import './dashboard.css'; // import the CSS file
 
 const Dashboard = () => {
   // Actual projects data
