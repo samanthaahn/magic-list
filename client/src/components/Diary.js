@@ -5,6 +5,7 @@ import './diary.css'
 const Diary = () => {
   const fieldRef = useRef(null);
   const [entries, storeEntry, removeEntry] = useJournal();
+  const [newEntry, setNewEntry] = useState('');
 
   useEffect(() => {
     fieldRef.current.focus();
@@ -26,10 +27,13 @@ const Diary = () => {
       }
     }, []);
 
-    const storeEntry = (entry) => {
-      const newEntries = [entry, ...entries];
-      setEntries(newEntries);
-      setEntriesToStorage(newEntries);
+    const storeEntry = () => {
+      if (newEntry.trim() !== '') {
+        const updatedEntries = [newEntry, ...entries];
+        setEntries(updatedEntries);
+        setEntriesToStorage(updatedEntries);
+        setNewEntry('');
+      }
     };
 
     const removeEntry = (index) => {
@@ -48,8 +52,14 @@ const Diary = () => {
     <div className="journal-container">
       <h1 className="journal-title">Good or Bad, write how you're feeling</h1>
       <div className="entry-form">
-        <input type="text" ref={fieldRef} className="entry-input" />
-        <button onClick={() => storeEntry('New Entry')} className="add-entry-button">
+        <input
+          type="text"
+          ref={fieldRef}
+          className="entry-input"
+          value={newEntry}
+          onChange={(e) => setNewEntry(e.target.value)}
+        />
+        <button onClick={storeEntry} className="add-entry-button">
           Add Entry
         </button>
       </div>
