@@ -17,7 +17,6 @@ const Today  = () => {
       <Navigation />
       <section className="today-main">
         <div className="today-container">
-          {/* <h2>What are your goals today?</h2> */}
           {habits.map((habit, index) => (
             <Habit key={index} {...habit} />
           ))}
