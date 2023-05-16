@@ -1,6 +1,6 @@
 import React from 'react';
 import Project from '../Project/Project';
-// 
+import Navigation from '../Navigation/Navigation';
 import prj1 from '../../images/today.jpg';
 import prj2 from '../../images/week.jpg';
 import prj3 from '../../images/month.jpg';
@@ -19,6 +19,7 @@ const Dashboard = () => {
 
   return (
     <div className="mainproject">
+      <Navigation />
       <section className="portfolio">
         <h2>Welcome back, USERNAME!</h2>
         <div className="projects-container">
