@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const diarySchema = new Schema({
-  text: {
+  diaryText: {
     type: String,
     required: 'You need to leave a thought!',
     minlength: 1,
