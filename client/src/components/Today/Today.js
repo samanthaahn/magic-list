@@ -6,10 +6,10 @@ import "./Today.css";
 const Today  = () => {
 
   const habits = [
-    { id: 1, title: 'Habit 1' },
-    { id: 2, title: 'Habit 2' },
-    { id: 3, title: 'Habit 3' },
-    { id: 4, title: 'Habit 4' }
+    { id: 1, title: 'Mental' },
+    { id: 2, title: 'Exercise' },
+    { id: 3, title: 'Nutrition' },
+    { id: 4, title: 'Entertainment' }
   ];
 
   return (
