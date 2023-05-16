@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
-import './diary.css'
+import './diary.css';
 
 const Diary = () => {
   const fieldRef = useRef(null);
-  const [entries, storeEntry, removeEntry] = useJournal();
+  const [entries, storeEntry, removeEntry, editEntry] = useJournal();
   const [newEntry, setNewEntry] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
 
   useEffect(() => {
     fieldRef.current.focus();
@@ -29,23 +30,35 @@ const Diary = () => {
 
     const storeEntry = () => {
       if (newEntry.trim() !== '') {
-        const updatedEntries = [newEntry, ...entries];
-        setEntries(updatedEntries);
-        setEntriesToStorage(updatedEntries);
-        setNewEntry('');
+        if (editIndex !== -1) {
+          const updatedEntries = [...entries];
+          updatedEntries[editIndex] = newEntry;
+          setEntries(updatedEntries);
+          setEntriesToStorage(updatedEntries);
+          setNewEntry('');
+          setEditIndex(-1);
+        } else {
+          const updatedEntries = [newEntry, ...entries];
+          setEntries(updatedEntries);
+          setEntriesToStorage(updatedEntries);
+          setNewEntry('');
+        }
       }
     };
 
     const removeEntry = (index) => {
-      const newEntries = [
-        ...entries.slice(0, index),
-        ...entries.slice(index + 1),
-      ];
+      const newEntries = [...entries.slice(0, index), ...entries.slice(index + 1)];
       setEntries(newEntries);
       setEntriesToStorage(newEntries);
     };
 
-    return [entries, storeEntry, removeEntry];
+    const editEntry = (index) => {
+      setNewEntry(entries[index]);
+      setEditIndex(index);
+      fieldRef.current.focus();
+    };
+
+    return [entries, storeEntry, removeEntry, editEntry];
   }
 
   return (
@@ -60,13 +73,15 @@ const Diary = () => {
           onChange={(e) => setNewEntry(e.target.value)}
         />
         <button onClick={storeEntry} className="add-entry-button">
-          Add Entry
+          {editIndex !== -1 ? 'Update Entry' : 'Add Entry'}
         </button>
       </div>
       <ul className="entry-list">
         {entries.map((entry, index) => (
           <li key={index} className="entry-item">
-            <span className="entry-text">{entry}</span>
+            <span className="entry-text" onClick={() => editEntry(index)}>
+              {entry}
+            </span>
             <button onClick={() => removeEntry(index)} className="delete-entry-button">
               Delete
             </button>
