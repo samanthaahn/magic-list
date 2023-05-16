@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Login from "./components/Login";
-import Week from "./components/Week";
+import Dashboard from "./components/dashboard/dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Diary from "./components/Diary";
@@ -36,9 +36,10 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Login />} />
-              <Route path="/week" element={<Week />} />
-              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
               <Route path="/diary" element={<Diary />} />
+              <Route path="/week" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+
             </Routes>
           </BrowserRouter>
         </ApolloProvider>
