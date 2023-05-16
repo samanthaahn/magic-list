@@ -37,8 +37,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/diary" element={<Diary />} />
-              <Route path="/week" element={<Dashboard />} />
+              <Route path="/today" element={<Today />} />
+              {/* <Route path="/week" element={<Week />} /> */}
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/calendar" element={<MyCalendar />} />
             </Routes>
           </BrowserRouter>
         </ApolloProvider>
