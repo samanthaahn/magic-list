@@ -1,14 +1,14 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Habit } = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Habit } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('habits');
+      return User.find().populate("habits").populate("diaries");
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('habits');
+      return User.findOne({ username }).populate("habits").populate("diaries");
     },
     habits: async (parent, { username }) => {
       const params = username ? { username } : {};
@@ -19,9 +19,9 @@ const resolvers = {
     },
     me: async (parent, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('habits');
+        return User.findOne({ _id: context.user._id }).populate("habits");
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -35,13 +35,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No user found with this email address');
+        throw new AuthenticationError("No user found with this email address");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
@@ -61,7 +61,21 @@ const resolvers = {
 
         return habit;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    addDiary: async (parent, { diaryText }, context) => {
+      if (context.user) {
+        const diary = await Diary.create({
+          diaryText,
+        });
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { diaries: diary._id } }
+        );
+
+        return user;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     addComment: async (parent, { thoughtId, commentText }, context) => {
       if (context.user) {
@@ -78,7 +92,7 @@ const resolvers = {
           }
         );
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     removeHabit: async (parent, { habitId }, context) => {
       if (context.user) {
@@ -93,7 +107,7 @@ const resolvers = {
 
         return habit;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     removeComment: async (parent, { habitId, commentId }, context) => {
       if (context.user) {
@@ -110,7 +124,7 @@ const resolvers = {
           { new: true }
         );
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };
