@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-package-lock.jsom
+package-lock.json
+client/pagckage-lock.json
+server/pagckage-lock.json
 
 # testing
 /coverage
