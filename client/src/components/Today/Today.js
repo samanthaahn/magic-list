@@ -1,20 +1,15 @@
 import React from 'react';
 import Habit from '../Habit/Habit';
 import Navigation from '../Navigation/Navigation';
-import prj1 from '../../images/today.jpg';
-import prj2 from '../../images/week.jpg';
-import prj3 from '../../images/month.jpg';
-import prj4 from '../../images/history.jpg';
-import './Today.css'; // import the CSS file
+import "./Today.css";
 
 const Today  = () => {
-  // Actual projects data
-  // Add my prtojects here:
+
   const habits = [
-    { title: 'Excerise', imageUrl: prj1},
-    { title: 'Mental', imageUrl: prj2},
-    { title: 'Nutrition', imageUrl: prj3},
-    { title: 'Fun', imageUrl: prj4},
+    { id: 1, title: 'Habit 1' },
+    { id: 2, title: 'Habit 2' },
+    { id: 3, title: 'Habit 3' },
+    { id: 3, title: 'Habit 3' }
   ];
 
   return (
