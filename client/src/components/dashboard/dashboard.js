@@ -1,10 +1,9 @@
 import React from 'react';
-import Project from '../Project/Project';
+import Project from './Project.js';
 import Navigation from '../Navigation/Navigation';
-import prj1 from '../../images/today.jpg';
-import prj2 from '../../images/week.jpg';
-import prj3 from '../../images/month.jpg';
-import prj4 from '../../images/history.jpg';
+import prj2 from '../../images/today.jpg';
+import prj3 from '../../images/week.jpg';
+import prj4 from '../../images/diary.jpg';
 import './dashboard.css'; // import the CSS file
 
 const Dashboard = () => {
