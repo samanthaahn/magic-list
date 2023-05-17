@@ -94,6 +94,92 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    addEvent: async (parent, { title, start, end }, context) => {
+      if (context.user) {
+        const event = await Event.create({
+          title,
+          start,
+          end,
+        });
+
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { events: event._id } },
+          { new: true }
+        );
+
+        return user;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    editEvent: async (parent, { eventId, title, start, end }, context) => {
+      if (context.user) {
+        const event = await Event.findOneAndUpdate(
+          { _id: eventId },
+          { title, start, end },
+          { new: true }
+        );
+
+        if (!event) {
+          throw new Error("Event not found");
+        }
+
+        return event;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    editDiary: async (parent, { diaryId, text, date }, context) => {
+      if (context.user) {
+        const diary = await Diary.findOneAndUpdate(
+          { _id: diaryId },
+          { text, date },
+          { new: true }
+        );
+
+        if (!diary) {
+          throw new Error("Diary entry not found");
+        }
+
+        return diary;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    deleteDiary: async (parent, { diaryId }, context) => {
+      if (context.user) {
+        const diary = await Diary.findOneAndDelete({ _id: diaryId });
+
+        if (!diary) {
+          throw new Error("Diary entry not found");
+        }
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { diaries: diary._id } }
+        );
+
+        return diary;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteEvent: async (parent, { eventId }, context) => {
+      if (context.user) {
+        const event = await Event.findOneAndDelete({ _id: eventId });
+
+        if (!event) {
+          throw new Error("Event not found");
+        }
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { events: event._id } }
+        );
+
+        return event;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
     removeHabit: async (parent, { habitId }, context) => {
       if (context.user) {
         const habit = await Habit.findOneAndDelete({
