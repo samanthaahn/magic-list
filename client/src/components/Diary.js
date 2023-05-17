@@ -68,6 +68,7 @@ const Diary = () => {
 
   return (
     <div className="journal-container">
+      <Navigation />
       <h1 className="journal-title">Good or Bad, write how you're feeling</h1>
       <div className="entry-form">
         <textarea
