@@ -30,8 +30,16 @@ const typeDefs = gql`
   }
 
   type Diary {
+    _id: ID
     text: String
     date: String
+  }
+  
+  type Event {
+    _id: ID
+    title: String
+    start: String
+    end: String
   }
 
   type Query {
@@ -52,6 +60,11 @@ const typeDefs = gql`
     removeHabit(habitId: ID!): Habit
     removeComment(habitId: ID!, commentId: ID!): Habit
     addDiary(diaryText: String!): User
+    editDiary(diaryId: ID!, text: String!, date: String!): Diary
+    deleteDiary(diaryId: ID!): Diary
+    addEvent(title: String!, start: String!, end: String!): User
+    editEvent(eventId: ID!, title: String!, start: String!, end: String!): Event
+    deleteEvent(eventId: ID!): Event
   }
 `;
 
