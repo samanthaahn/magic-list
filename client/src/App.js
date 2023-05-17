@@ -6,7 +6,7 @@ import Dashboard from "./components/dashboard/dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Diary from "./components/Diary";
-// import MyCalendar from "./components/calendar/calendar";
+import MyCalendar from "./components/calendar/calendar";
 // import Today from "./components/today";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -42,7 +42,7 @@ function App() {
               {/* <Route path="/today" element={<Today />} /> */}
               {/* <Route path="/week" element={<Week />} /> */}
               <Route path="/dashboard" element={<Dashboard />} />
-              {/* <Route path="/calendar" element={<MyCalendar />} /> */}
+              <Route path="/calendar" element={<MyCalendar />} />
             </Routes>
           </BrowserRouter>
         </ApolloProvider>
