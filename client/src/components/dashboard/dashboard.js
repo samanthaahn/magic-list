@@ -19,9 +19,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <Navigation />
-      <section className="portfolio">
+      <section className="portfolio container text-center">
         <h2>Welcome to the Dashboard!</h2>
-        <div className="projects-container">
+        <div className="projects-container container grid grid-cols-2 gap-4">
           {projects.map((project, index) => (
             <Link to={project.route} key={index}>
               <Project title={project.title} imageUrl={project.imageUrl} />
