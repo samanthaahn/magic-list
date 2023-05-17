@@ -13,12 +13,12 @@ const MyCalendar = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  
+
     const parsedStart = moment(newEvent.start).toDate();
     const parsedEnd = moment(newEvent.end).toDate();
-  
+
     const updatedEvent = { ...newEvent, start: parsedStart, end: parsedEnd };
-  
+
     if (selectedEvent) {
       // Editing existing event
       const updatedEvents = events.map((event) =>
@@ -30,13 +30,17 @@ const MyCalendar = () => {
       // Adding new event
       setEvents([...events, updatedEvent]);
     }
-  
+
     setNewEvent({ start: '', end: '', title: '' });
     setShowForm(false);
   };
 
   const handleEditEventClick = (event) => {
-    setNewEvent(event);
+    const { start, end, title } = event;
+    const formattedStart = moment(start).format('YYYY-MM-DDTHH:mm');
+    const formattedEnd = moment(end).format('YYYY-MM-DDTHH:mm');
+  
+    setNewEvent({ start: formattedStart, end: formattedEnd, title });
     setSelectedEvent(event);
     setShowForm(true);
   };
@@ -44,6 +48,21 @@ const MyCalendar = () => {
   const handleDeleteEventClick = (event) => {
     const updatedEvents = events.filter((e) => e !== event);
     setEvents(updatedEvents);
+
+    // Clear newEvent state if the deleted event was being edited or added
+    if (selectedEvent === event) {
+      setNewEvent({ start: '', end: '', title: '' }); // Clear the newEvent state
+      setSelectedEvent(null);
+    }
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (selectedEvent) {
+      handleDeleteEventClick(selectedEvent);
+    } else {
+      setNewEvent({ start: '', end: '', title: '' }); // Clear the newEvent state
+      setShowForm(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -94,14 +113,18 @@ const MyCalendar = () => {
           <button type="button" onClick={() => setShowForm(false)}>
             Cancel
           </button>
+          <button type="button" onClick={handleDeleteButtonClick}>
+            Delete Event
+          </button>
         </form>
       )}
+
 
       <Calendar
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
-        views={['month', 'week', 'day']} // Include week and day views
+        views={['month', 'week', 'day', 'agenda']} // Include agenda view
         events={events}
         onSelectEvent={handleEditEventClick}
         components={{
@@ -113,14 +136,13 @@ const MyCalendar = () => {
   );
 };
 
-const EventComponent = ({ event, title, onDeleteEvent }) => (
+const EventComponent = ({ event, title }) => (
   <div>
     <strong>{title}</strong>
-    <br />
-    <button onClick={() => onDeleteEvent(event)}>Delete</button>
   </div>
 );
 
 export default MyCalendar;
+
 
 
