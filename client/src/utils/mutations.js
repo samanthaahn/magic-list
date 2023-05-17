@@ -51,14 +51,9 @@ mutation Mutation($diaryText: String!) {
 }
 `
 export const DELETE_DIARY = gql`
-mutation Mutation($diaryText: String!) {
-  deleteDiary(diaryText: $diaryText) {
-    username
-    diaries {
-      diaryText
-      date
+mutation Mutation($diaryId: ID!) {
+  deleteDiary(diaryId: $diaryId) {
       _id
     }
-  }
 }
 `

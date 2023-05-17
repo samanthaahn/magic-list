@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import moment from "moment";
+//import moment from "moment";
 import "./diary.css";
 import Navigation from "./Navigation/Navigation";
 import { useQuery, useMutation } from "@apollo/client";
@@ -8,7 +8,7 @@ import { ADD_DIARY, EDIT_DIARY, DELETE_DIARY } from "../utils/mutations";
 
 const Diary = () => {
   const fieldRef = useRef(null);
-  const [entries, storeEntry, removeEntry, editEntry] = useJournal();
+  const [storeEntry, removeEntry, editEntry] = useJournal();
   const [newEntry, setNewEntry] = useState("");
   const [editIndex, setEditIndex] = useState(-1);
 
@@ -51,31 +51,31 @@ const Diary = () => {
       }
     };
 
-    const removeEntry = (index) => {
+    const removeEntry = async (index) => {
       try {
-        const [data] = editDiary({
-        variables: { diaryText: newEntry },
-      });
-      window.location.reload();
-      } catch (error) {}
-      console.log(error)
+        const diaryId = diaries.diaries[index]._id; 
+        await deleteDiary({
+          variables: { diaryId },
+        });
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    const editEntry = (index) => {
-      // setNewEntry(entries[index].text);
-      // setEditIndex(index);
-      // fieldRef.current.focus();
-      try {
-        const [data] = editDiary({
-        variables: { diaryText: editEntry },
-      });
-      window.location.reload();
-      } catch (error) {}
-      console.log(error)
+      const editEntry = (index) => {
+        try {
+          const entryToEdit = entries[index];
+          setNewEntry(entryToEdit.text);
+          setEditIndex(index);
+          fieldRef.current.focus();
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-    return [entries, storeEntry, removeEntry, editEntry];
+    return [storeEntry, removeEntry, editEntry];
   }
-}
 
   return (
     <div className="journal-container">
