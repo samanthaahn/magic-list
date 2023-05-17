@@ -7,7 +7,7 @@ import { ADD_DIARY, EDIT_DIARY, DELETE_DIARY } from "../utils/mutations";
 
 const Diary = () => {
   const fieldRef = useRef(null);
-  const [storeEntry, removeEntry, editEntry] = useJournal();
+  const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState("");
   const [editIndex, setEditIndex] = useState(-1);
 
@@ -23,63 +23,58 @@ const Diary = () => {
     console.log(diaries);
   }, [data]);
 
-  function useJournal() {
-    const [entries, setEntries] = useState([]);
+  useEffect(() => {
+    const entriesFromStorage = JSON.parse(
+      window.localStorage.getItem("journalEntries")
+    );
+    if (entriesFromStorage) {
+      setEntries(entriesFromStorage);
+    }
+  }, []);
 
-    const getEntriesFromStorage = () =>
-      JSON.parse(window.localStorage.getItem("journalEntries"));
+  const storeEntry = async () => {
+    try {
+      const { data } = await addDiary({
+        variables: { diaryText: newEntry },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const setEntriesToStorage = (items) =>
-      window.localStorage.setItem("journalEntries", JSON.stringify(items));
+  const removeEntry = async (index) => {
+    try {
+      const diaryId = diaries.diaries[index]._id;
+      await deleteDiary({
+        variables: { diaryId },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    useEffect(() => {
-      const entriesFromStorage = getEntriesFromStorage();
-      if (entriesFromStorage) {
-        setEntries(entriesFromStorage);
-      }
-    }, []);
+  const editEntry = (index) => {
+    const entryToEdit = diaries.diaries[index];
+    setNewEntry(entryToEdit.diaryText);
+    setEditIndex(index);
+  };
 
-    const storeEntry = () => {
-      try {
-        const { data } = addDiary({
-          variables: { diaryText: newEntry },
-        });
-        window.location.reload();
+  const updateEntry = async (index) => {
+    try {
+      const entryToEdit = diaries.diaries[index];
+      await editDiary({
+        variables: { diaryId: entryToEdit._id, diaryText: newEntry },
+      });
+      setNewEntry("");
+      setEditIndex(-1);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const removeEntry = async (index) => {
-      try {
-        const diaryId = diaries.diaries[index]._id; 
-        await deleteDiary({
-          variables: { diaryId },
-        });
-        window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-      const editEntry = async (index) => {
-        try {
-          const entryToEdit = diaries.diaries[index];
-          setNewEntry(entryToEdit.text);
-          setEditIndex(index);
-          // fieldRef.current.focus();
-          await editDiary({
-            variables: { entryToEdit }
-          })
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-    return [storeEntry, removeEntry, editEntry];
-  }
 
   return (
     <div className="journal-container">
@@ -103,21 +98,41 @@ const Diary = () => {
             <li key={index} className="entry-item">
               <div className="entry-text-container">
                 <span className="entry-date">{entry.createdAt}</span>
-                <span className="entry-text" onClick={() => editEntry(index)}>
-                  {entry.diaryText}
-                </span>
+                <div className="entry-content">
+                  {editIndex !== index ? (
+                    <span className="entry-text" onClick={() => editEntry(index)}>
+                      {entry.diaryText}
+                    </span>
+                  ) : (
+                    <textarea
+                      type="text"
+                      ref={fieldRef}
+                      className="entry-input"
+                      value={newEntry}
+                      onChange={(e) => setNewEntry(e.target.value)}
+                    />
+                  )}
+                </div>
+                <div className="entry-actions">
+                  {editIndex !== index ? (
+                    <button onClick={() => editEntry(index)} className="edit-entry-button">
+                      Edit
+                    </button>
+                  ) : (
+                    <button onClick={updateEntry} className="update-entry-button">
+                      Update
+                    </button>
+                  )}
+                  <button onClick={() => removeEntry(index)} className="delete-entry-button">
+                    Delete
+                  </button>
+                </div>
               </div>
-              <button
-                onClick={() => removeEntry(index)}
-                className="delete-entry-button"
-              >
-                Delete
-              </button>
             </li>
           ))}
       </ul>
     </div>
-  );
+  )
 };
 
 export default Diary;
