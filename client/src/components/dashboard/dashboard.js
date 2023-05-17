@@ -21,7 +21,7 @@ const Dashboard = () => {
       <Navigation />
       <section className="portfolio container text-center">
         <h2>Welcome to the Dashboard!</h2>
-        <div className="projects-container container text-center">
+        <div className="projects-container container grid grid-cols-2 gap-4">
           {projects.map((project, index) => (
             <Link to={project.route} key={index}>
               <Project title={project.title} imageUrl={project.imageUrl} />
