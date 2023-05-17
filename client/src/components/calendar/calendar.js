@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './calendar.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -78,12 +79,13 @@ const MyCalendar = () => {
   return (
     <div>
       {!showForm && (
-        <button onClick={handleAddEventClick}>Add Event</button>
+        <button id="add-event-button" onClick={handleAddEventClick}>Add Event</button>
       )}
 
       {showForm && (
         <form onSubmit={handleFormSubmit}>
           <input
+          className="input-box"
             type="text"
             name="title"
             placeholder="Event Title"
@@ -94,6 +96,7 @@ const MyCalendar = () => {
           <label>Start Date and Time:</label>
           <br />
           <input
+          className="input-box"
             type="datetime-local"
             name="start"
             value={newEvent.start}
@@ -103,17 +106,18 @@ const MyCalendar = () => {
           <label>End Date and Time:</label>
           <br />
           <input
+          className="input-box"
             type="datetime-local"
             name="end"
             value={newEvent.end}
             onChange={handleInputChange}
           />
           <br />
-          <button type="submit">{selectedEvent ? 'Update Event' : 'Save Event'}</button>
-          <button type="button" onClick={() => setShowForm(false)}>
+          <button id="update-event-button" type="submit">{selectedEvent ? 'Update Event' : 'Save Event'}</button>
+          <button className="cancel-btn" type="button" onClick={() => setShowForm(false)}>
             Cancel
           </button>
-          <button type="button" onClick={handleDeleteButtonClick}>
+          <button className="delete-btn" type="button" onClick={handleDeleteButtonClick}>
             Delete Event
           </button>
         </form>
