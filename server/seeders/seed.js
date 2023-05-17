@@ -30,7 +30,7 @@ db.once('open', async () => {
         { _id: habitId },
         {
           $addToSet: {
-            diary: _id,
+            diaries: _id,
           },
         }
       );
