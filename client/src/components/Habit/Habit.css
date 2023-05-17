@@ -32,7 +32,7 @@
   border-radius: 4px;
 }
 
-.add-entry-button {
+.add-entry-button, .cancel-button {
   margin-left: 10px;
   padding: 8px 16px;
   background-color: #007bff;
@@ -87,4 +87,12 @@
 
 .dropdown-menu-item:hover {
   background-color: #f0f0f0;
+}
+
+.habit-container.saved {
+  background-color: lightgreen;
+}
+
+.entry-form.hidden {
+  display: none;
 }
