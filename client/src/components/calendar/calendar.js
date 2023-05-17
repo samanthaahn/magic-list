@@ -13,19 +13,24 @@ const MyCalendar = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
+  
+    const parsedStart = moment(newEvent.start).toDate();
+    const parsedEnd = moment(newEvent.end).toDate();
+  
+    const updatedEvent = { ...newEvent, start: parsedStart, end: parsedEnd };
+  
     if (selectedEvent) {
       // Editing existing event
       const updatedEvents = events.map((event) =>
-        event === selectedEvent ? { ...newEvent } : event
+        event === selectedEvent ? { ...updatedEvent } : event
       );
       setEvents(updatedEvents);
       setSelectedEvent(null);
     } else {
       // Adding new event
-      setEvents([...events, newEvent]);
+      setEvents([...events, updatedEvent]);
     }
-
+  
     setNewEvent({ start: '', end: '', title: '' });
     setShowForm(false);
   };
@@ -96,6 +101,7 @@ const MyCalendar = () => {
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
+        views={['month', 'week', 'day']} // Include week and day views
         events={events}
         onSelectEvent={handleEditEventClick}
         components={{
@@ -116,4 +122,5 @@ const EventComponent = ({ event, title, onDeleteEvent }) => (
 );
 
 export default MyCalendar;
+
 
