@@ -8,5 +8,19 @@ export const QUERY_USER = gql`
       email
       }
     }
+`;
+
+export const QUERY_ME = gql`
+query me {
+  me {
+    username
+    diaries {
+      diaryText
+      date
+      _id
+    }
+    _id
+    email
   }
+}
 `;
