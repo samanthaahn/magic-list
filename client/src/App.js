@@ -8,6 +8,8 @@ import Today from "./components/Today/Today.js";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Diary from "./components/Diary";
+import MyCalendar from "./components/calendar/calendar";
+// import Today from "./components/today";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -42,6 +44,8 @@ function App() {
               <Route path="/week" element={<Week />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/today" element={<Today />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/calendar" element={<MyCalendar />} />
             </Routes>
           </BrowserRouter>
         </ApolloProvider>
