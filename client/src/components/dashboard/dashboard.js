@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import Project from './Project/Project.js';
-import prj1 from '../../images/month.jpg';
-import prj2 from '../../images/today.jpg';
-import prj3 from '../../images/week.jpg';
-import prj4 from '../../images/diary.jpg';
+import prj1 from '../../images/calendar6.png';
+import prj2 from '../../images/today5.png';
+import prj3 from '../../images/week5.jpg';
+import prj4 from '../../images/diary3.jpg';
 import './dashboard.css'; // import the CSS file
 
 const Dashboard = () => {
