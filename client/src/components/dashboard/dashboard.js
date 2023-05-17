@@ -6,7 +6,7 @@ import prj1 from '../../images/month.jpg';
 import prj2 from '../../images/today.jpg';
 import prj3 from '../../images/week.jpg';
 import prj4 from '../../images/diary.jpg';
-import './dashboard.css'; // import the CSS file
+import './Dashboard.css'; // import the CSS file
 
 const Dashboard = () => {
   const projects = [
@@ -19,9 +19,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <Navigation />
-      <section className="portfolio">
+      <section className="portfolio container text-center">
         <h2>Welcome to the Dashboard!</h2>
-        <div className="projects-container">
+        <div className="projects-container container grid grid-cols-2 gap-4">
           {projects.map((project, index) => (
             <Link to={project.route} key={index}>
               <Project title={project.title} imageUrl={project.imageUrl} />
