@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Habit } = require("../models");
+const { User, Habit, Diary } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -17,9 +17,13 @@ const resolvers = {
     habit: async (parent, { thoughtId }) => {
       return Habit.findOne({ _id: habitId });
     },
-    me: async (parent, context) => {
+    me: async (parent, args, context) => {
+      console.log('Im in the me function')
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("habits");
+        console.log('im in the if')
+        const user = User.findOne({ _id: context.user._id }).populate("habits").populate("diaries");
+        console.log(user)
+        return user
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -71,7 +75,7 @@ const resolvers = {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { diaries: diary._id } }
-        );
+        ).populate('diaries');
 
         return user;
       }

@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import './diary.css';
+import Navigation from './Navigation/Navigation';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries'
+import { ADD_DIARY } from '../utils/mutations'
 
 const Diary = () => {
   const fieldRef = useRef(null);
@@ -8,9 +12,16 @@ const Diary = () => {
   const [newEntry, setNewEntry] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
 
+  const {loading,data} = useQuery(QUERY_ME);
+  const diaries = data?.me || {}
+
+  const [addDiary] = useMutation(ADD_DIARY);
+
+
   useEffect(() => {
     fieldRef.current.focus();
-  }, []);
+    console.log(diaries)
+  }, [data]);
 
   function useJournal() {
     const [entries, setEntries] = useState([]);
@@ -29,38 +40,61 @@ const Diary = () => {
     }, []);
 
     const storeEntry = () => {
-      if (newEntry.trim() !== '') {
-        const entry = {
-          text: newEntry,
-          date: moment().format('MMM D, YYYY, h:mm:ss a'),
-        };
+      // if (newEntry.trim() !== '') {
+      //   const entry = {
+      //     text: newEntry,
+      //     date: moment().format('MMM D, YYYY, h:mm:ss a'),
+      //   };
     
-        if (editIndex !== -1) {
-          const updatedEntries = [...entries];
-          updatedEntries[editIndex] = entry;
-          setEntries(updatedEntries);
-          setEntriesToStorage(updatedEntries);
-          setNewEntry('');
-          setEditIndex(-1);
-        } else {
-          const updatedEntries = [entry, ...entries];
-          setEntries(updatedEntries);
-          setEntriesToStorage(updatedEntries);
-          setNewEntry('');
-        }
-      }
+      //   if (editIndex !== -1) {
+      //     const updatedEntries = [...entries];
+      //     updatedEntries[editIndex] = entry;
+      //     setEntries(updatedEntries);
+      //     setEntriesToStorage(updatedEntries);
+      //     setNewEntry('');
+      //     setEditIndex(-1);
+      //   } else {
+      //     const updatedEntries = [entry, ...entries];
+      //     setEntries(updatedEntries);
+      //     setEntriesToStorage(updatedEntries);
+      //     setNewEntry('');
+      //   }
+      // }
+
+try {
+  const {data} = addDiary({
+    variables: {diaryText: newEntry}
+  })
+  window.location.reload()
+} catch (error) {
+  console.log(error)
+}
+
+
+
+
     };
 
     const removeEntry = (index) => {
-      const newEntries = [...entries.slice(0, index), ...entries.slice(index + 1)];
-      setEntries(newEntries);
-      setEntriesToStorage(newEntries);
+      // const newEntries = [...entries.slice(0, index), ...entries.slice(index + 1)];
+      // setEntries(newEntries);
+      // setEntriesToStorage(newEntries);
+      try {
+        
+      } catch (error) {
+        
+      }
     };
 
     const editEntry = (index) => {
-      setNewEntry(entries[index].text);
-      setEditIndex(index);
-      fieldRef.current.focus();
+      // setNewEntry(entries[index].text);
+      // setEditIndex(index);
+      // fieldRef.current.focus();
+      try {
+        
+      } catch (error) {
+        
+      }
     };
 
     return [entries, storeEntry, removeEntry, editEntry];
@@ -68,6 +102,7 @@ const Diary = () => {
 
   return (
     <div className="journal-container">
+      <Navigation />
       <h1 className="journal-title">Good or Bad, write how you're feeling</h1>
       <div className="entry-form">
         <textarea
@@ -82,12 +117,12 @@ const Diary = () => {
         </button>
       </div>
       <ul className="entry-list">
-  {entries.map((entry, index) => (
+  {diaries.diaries && diaries.diaries.map((entry, index) => (
     <li key={index} className="entry-item">
       <div className="entry-text-container">
-        <span className="entry-date">{entry.date}</span>
+        <span className="entry-date">{entry.createdAt}</span>
         <span className="entry-text" onClick={() => editEntry(index)}>
-          {entry.text}
+          {entry.diaryText}
         </span>
       </div>
       <button onClick={() => removeEntry(index)} className="delete-entry-button">
