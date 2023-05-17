@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard/dashboard.js";
+import Dashboard from "./components/dashboard/dashboard.js";
 import Week from "./components/Week/Week.js";
 import Today from "./components/Today/Today.js";
 import Header from "./components/Header";
