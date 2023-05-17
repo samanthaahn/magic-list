@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard/dashboard.js";
+import Week from "./components/Week/Week.js";
 import Today from "./components/Today/Today.js";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -38,7 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/diary" element={<Diary />} />
-              <Route path="/week" element={<Dashboard />} />
+              <Route path="/week" element={<Week />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/today" element={<Today />} />
             </Routes>

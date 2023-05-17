@@ -52,7 +52,7 @@ function Habit ({ title, options }) {
             onChange={handleNoteChange}
             placeholder="Add a note"
           />
-          <button className="add-entry-button" onClick={handleSave}>Save</button>
+          <button className="save-button" onClick={handleSave}>Save</button>
         </div>
       )}
 
@@ -74,7 +74,7 @@ function Habit ({ title, options }) {
             onChange={handleNoteChange}
             placeholder="Add a note"
           />
-          <button className="add-entry-button" onClick={handleSave}>Save</button>
+          <button className="save-button" onClick={handleSave}>Save</button>
           <button className="cancel-button" onClick={handleCancel}>Cancel</button>
         </div>
       )}

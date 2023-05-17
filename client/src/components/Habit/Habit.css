@@ -32,7 +32,7 @@
   border-radius: 4px;
 }
 
-.add-entry-button, .cancel-button {
+.cancel-button, .save-button {
   margin-left: 10px;
   padding: 8px 16px;
   background-color: #007bff;
