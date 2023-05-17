@@ -31,7 +31,7 @@ const typeDefs = gql`
 
   type Diary {
     _id: ID
-    text: String
+    diaryText: String
     date: String
   }
   
@@ -48,6 +48,7 @@ const typeDefs = gql`
     habits(username: String): [Habit]
     habit(habitId: ID!): Habit
     me: User
+    diaries: [Diary]
   }
 
 

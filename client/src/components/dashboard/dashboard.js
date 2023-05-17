@@ -7,6 +7,7 @@ import prj2 from '../../images/today.jpg';
 import prj3 from '../../images/week.jpg';
 import prj4 from '../../images/diary.jpg';
 import './Dashboard.css'; // import the CSS file
+import {useQuery} from '@apollo/client';
 
 const Dashboard = () => {
   const projects = [
