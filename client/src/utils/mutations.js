@@ -25,3 +25,35 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_DIARY = gql`
+mutation Mutation($diaryText: String!) {
+  addDiary(diaryText: $diaryText) {
+    username
+    diaries {
+      diaryText
+      date
+      _id
+    }
+  }
+}
+`
+export const EDIT_DIARY = gql`
+mutation Mutation($diaryText: String!) {
+  editDiary(diaryText: $diaryText) {
+    username
+    diaries {
+      diaryText
+      date
+      _id
+    }
+  }
+}
+`
+export const DELETE_DIARY = gql`
+mutation Mutation($diaryId: ID!) {
+  deleteDiary(diaryId: $diaryId) {
+      _id
+    }
+}
+`
