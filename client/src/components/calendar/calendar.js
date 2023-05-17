@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './calendar.css';
+import Navigation from "../Navigation/Navigation";
 
 const localizer = momentLocalizer(moment);
 
@@ -78,6 +79,7 @@ const MyCalendar = () => {
 
   return (
     <div>
+      <Navigation />
       {!showForm && (
         <button id="add-event-button" onClick={handleAddEventClick}>Add Event</button>
       )}
