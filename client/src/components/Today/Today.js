@@ -1,29 +1,24 @@
 import React from 'react';
 import Habit from '../Habit/Habit';
 import Navigation from '../Navigation/Navigation';
-import prj1 from '../../images/today.jpg';
-import prj2 from '../../images/week.jpg';
-import prj3 from '../../images/month.jpg';
-import prj4 from '../../images/history.jpg';
-import './Today.css'; // import the CSS file
+import "./Today.css";
 
 const Today  = () => {
-  // Actual projects data
-  // Add my prtojects here:
+
   const habits = [
-    { title: 'Excerise', imageUrl: prj1},
-    { title: 'Mental', imageUrl: prj2},
-    { title: 'Nutrition', imageUrl: prj3},
-    { title: 'Fun', imageUrl: prj4},
+    { id: 1, title: 'Mental', options: ['Meditate', 'Say Graditudes', 'Practice New Skill', 'Other'] },
+    { id: 2, title: 'Exercise', options: ['Take A Walk', 'Go to the Gym', 'Dance', 'Other'] },
+    { id: 3, title: 'Nutrition', options: ['Drink Water', 'Eat Your Veggies', 'Treat Yourself', 'Other'] },
+    { id: 4, title: 'Entertainment', options: ['Read A Chapter', 'Watch A New Movie', 'Listen to a Podcast', 'Other'] }
   ];
 
   return (
     <div>
       <Navigation />
-      <section className="portfolio">
-        <div className="projects-container">
+      <section className="today-main">
+        <div className="today-container">
           {habits.map((habit, index) => (
-            <Habit key={index} {...habit} />
+            <Habit key={index} title={habit.title} options={habit.options} />
           ))}
         </div>
       </section>
