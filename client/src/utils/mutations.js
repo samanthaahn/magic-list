@@ -38,3 +38,27 @@ mutation Mutation($diaryText: String!) {
   }
 }
 `
+export const EDIT_DIARY = gql`
+mutation Mutation($diaryText: String!) {
+  editDiary(diaryText: $diaryText) {
+    username
+    diaries {
+      diaryText
+      date
+      _id
+    }
+  }
+}
+`
+export const DELETE_DIARY = gql`
+mutation Mutation($diaryText: String!) {
+  deleteDiary(diaryText: $diaryText) {
+    username
+    diaries {
+      diaryText
+      date
+      _id
+    }
+  }
+}
+`
