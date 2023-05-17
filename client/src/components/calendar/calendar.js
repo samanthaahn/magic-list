@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './calendar.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -14,16 +15,21 @@ const MyCalendar = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    const parsedStart = moment(newEvent.start).toDate();
+    const parsedEnd = moment(newEvent.end).toDate();
+
+    const updatedEvent = { ...newEvent, start: parsedStart, end: parsedEnd };
+
     if (selectedEvent) {
       // Editing existing event
       const updatedEvents = events.map((event) =>
-        event === selectedEvent ? { ...newEvent } : event
+        event === selectedEvent ? { ...updatedEvent } : event
       );
       setEvents(updatedEvents);
       setSelectedEvent(null);
     } else {
       // Adding new event
-      setEvents([...events, newEvent]);
+      setEvents([...events, updatedEvent]);
     }
 
     setNewEvent({ start: '', end: '', title: '' });
@@ -31,7 +37,11 @@ const MyCalendar = () => {
   };
 
   const handleEditEventClick = (event) => {
-    setNewEvent(event);
+    const { start, end, title } = event;
+    const formattedStart = moment(start).format('YYYY-MM-DDTHH:mm');
+    const formattedEnd = moment(end).format('YYYY-MM-DDTHH:mm');
+  
+    setNewEvent({ start: formattedStart, end: formattedEnd, title });
     setSelectedEvent(event);
     setShowForm(true);
   };
@@ -39,6 +49,21 @@ const MyCalendar = () => {
   const handleDeleteEventClick = (event) => {
     const updatedEvents = events.filter((e) => e !== event);
     setEvents(updatedEvents);
+
+    // Clear newEvent state if the deleted event was being edited or added
+    if (selectedEvent === event) {
+      setNewEvent({ start: '', end: '', title: '' }); // Clear the newEvent state
+      setSelectedEvent(null);
+    }
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (selectedEvent) {
+      handleDeleteEventClick(selectedEvent);
+    } else {
+      setNewEvent({ start: '', end: '', title: '' }); // Clear the newEvent state
+      setShowForm(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -54,12 +79,13 @@ const MyCalendar = () => {
   return (
     <div>
       {!showForm && (
-        <button onClick={handleAddEventClick}>Add Event</button>
+        <button id="add-event-button" onClick={handleAddEventClick}>Add Event</button>
       )}
 
       {showForm && (
         <form onSubmit={handleFormSubmit}>
           <input
+          className="input-box"
             type="text"
             name="title"
             placeholder="Event Title"
@@ -70,6 +96,7 @@ const MyCalendar = () => {
           <label>Start Date and Time:</label>
           <br />
           <input
+          className="input-box"
             type="datetime-local"
             name="start"
             value={newEvent.start}
@@ -79,23 +106,29 @@ const MyCalendar = () => {
           <label>End Date and Time:</label>
           <br />
           <input
+          className="input-box"
             type="datetime-local"
             name="end"
             value={newEvent.end}
             onChange={handleInputChange}
           />
           <br />
-          <button type="submit">{selectedEvent ? 'Update Event' : 'Save Event'}</button>
-          <button type="button" onClick={() => setShowForm(false)}>
+          <button id="update-event-button" type="submit">{selectedEvent ? 'Update Event' : 'Save Event'}</button>
+          <button className="cancel-btn" type="button" onClick={() => setShowForm(false)}>
             Cancel
+          </button>
+          <button className="delete-btn" type="button" onClick={handleDeleteButtonClick}>
+            Delete Event
           </button>
         </form>
       )}
+
 
       <Calendar
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="month"
+        views={['month', 'week', 'day', 'agenda']} // Include agenda view
         events={events}
         onSelectEvent={handleEditEventClick}
         components={{
@@ -107,13 +140,13 @@ const MyCalendar = () => {
   );
 };
 
-const EventComponent = ({ event, title, onDeleteEvent }) => (
+const EventComponent = ({ event, title }) => (
   <div>
     <strong>{title}</strong>
-    <br />
-    <button onClick={() => onDeleteEvent(event)}>Delete</button>
   </div>
 );
 
 export default MyCalendar;
+
+
 
