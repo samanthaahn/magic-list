@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-//import moment from "moment";
 import "./diary.css";
 import Navigation from "./Navigation/Navigation";
 import { useQuery, useMutation } from "@apollo/client";
@@ -46,6 +45,8 @@ const Diary = () => {
           variables: { diaryText: newEntry },
         });
         window.location.reload();
+
+
       } catch (error) {
         console.log(error);
       }
@@ -63,12 +64,15 @@ const Diary = () => {
       }
     };
 
-      const editEntry = (index) => {
+      const editEntry = async (index) => {
         try {
-          const entryToEdit = entries[index];
+          const entryToEdit = diaries.diaries[index];
           setNewEntry(entryToEdit.text);
           setEditIndex(index);
-          fieldRef.current.focus();
+          // fieldRef.current.focus();
+          await editDiary({
+            variables: { entryToEdit }
+          })
         } catch (error) {
           console.log(error);
         }
