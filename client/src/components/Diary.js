@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import './diary.css';
+import Navigation from './Navigation/Navigation'
 
 const Diary = () => {
   const fieldRef = useRef(null);

@@ -19,10 +19,11 @@ const resolvers = {
     },
     me: async (parent, context) => {
       if (context.user) {
+        console.log(context.user);
         return User.findOne({ _id: context.user._id }).populate("habits");
       }
       throw new AuthenticationError("You need to be logged in!");
-    },
+    }
   },
 
   Mutation: {
