@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./calendar.css";
 import Navigation from "../Navigation/Navigation";
 import { ADD_EVENT } from "../../utils/mutations";
-import {useMutation} from '@apollo/client';
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
 
 const localizer = momentLocalizer(moment);
 
@@ -13,7 +14,34 @@ const MyCalendar = () => {
   const [events, setEvents] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [newEvent, setNewEvent] = useState({ start: "", end: "", eventTitle: "" });
+  const [newEvent, setNewEvent] = useState({
+    start: "",
+    end: "",
+    eventTitle: "",
+  });
+
+  const { loading, data } = useQuery(QUERY_ME);
+  const dataEvents = data?.me.events || [];
+
+  useEffect(() => {
+    console.log(dataEvents);
+    if (dataEvents.length) {
+      const newEvents = dataEvents.map((event) => ({
+        start: new Date(parseInt(event.start)).toLocaleDateString(),
+        end: new Date(parseInt(event.end)).toLocaleDateString(),
+        eventTitle: event.eventTitle,
+      }));
+      setEvents(newEvents);
+    }
+  }, [dataEvents]);
+
+  useEffect(() => {
+    console.log(events);
+    // if (events.length > 0){
+    //   const newEvents = events.map(event => ({start: event.start, end: event.end, title: event.eventTitle}))
+    //   setEvents(newEvents)
+    // }
+  }, [events]);
 
   const [addEvent, { errors }] = useMutation(ADD_EVENT);
 
@@ -32,20 +60,20 @@ const MyCalendar = () => {
           event === selectedEvent ? { ...updatedEvent } : event
         );
         // add query
-        const {data} = await addEvent({
+        const { data } = await addEvent({
           variables: {
             ...updatedEvent,
-          }
-        })
+          },
+        });
         setEvents(updatedEvents);
         setSelectedEvent(null);
       } else {
         // add query
-        const {data} = await addEvent({
+        const { data } = await addEvent({
           variables: {
             ...updatedEvent,
-          }
-        })
+          },
+        });
         // Adding new event
         setEvents([...events, updatedEvent]);
       }
@@ -156,29 +184,43 @@ const MyCalendar = () => {
           </button>
         </form>
       )}
-
-      <Calendar
-        localizer={localizer}
-        defaultDate={new Date()}
-        defaultView="month"
-        views={["month", "week", "day", "agenda"]} // Include agenda view
-        events={events}
-        onSelectEvent={handleEditEventClick}
-        components={{
-          event: (props) => (
-            <EventComponent {...props} onDeleteEvent={handleDeleteEventClick} />
-          ),
-        }}
-        style={{ height: "500px" }}
-      />
+      {events ? (
+        <Calendar
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView="month"
+          views={["month", "week", "day", "agenda"]} // Include agenda view
+          events={events}
+          titleAccessor="title"
+          startAccessor="start"
+          endAccessor="end"
+          onSelectEvent={handleEditEventClick}
+          components={{
+            event: (props) => (
+              <EventComponent
+                {...props}
+                onDeleteEvent={handleDeleteEventClick}
+              />
+            ),
+          }}
+          style={{ height: "500px" }}
+        />
+      ) : (
+        <div>Inside calender loading LOL</div>
+      )}
     </div>
   );
 };
 
-const EventComponent = ({ event, eventTitle }) => (
-  <div>
-    <strong>{eventTitle}</strong>
-  </div>
-);
+const EventComponent = (props) => {
+  console.log(props);
+  const { eventTitle: title } = props.event;
+  console.log(title);
+  return (
+    <div>
+      <strong>{title}</strong>
+    </div>
+  );
+};
 
 export default MyCalendar;
