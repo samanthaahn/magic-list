@@ -39,14 +39,10 @@ mutation Mutation($diaryText: String!) {
 }
 `
 export const EDIT_DIARY = gql`
-mutation Mutation($diaryText: String!) {
-  editDiary(diaryText: $diaryText) {
-    username
-    diaries {
+mutation Mutation($diaryId: ID!, $diaryText: String!) {
+  editDiary(diaryId: $diaryId, diaryText: $diaryText) {
       diaryText
-      date
       _id
-    }
   }
 }
 `

@@ -133,11 +133,11 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    editDiary: async (parent, { diaryId, text, date }, context) => {
+    editDiary: async (parent, { diaryId, diaryText }, context) => {
       if (context.user) {
         const diary = await Diary.findOneAndUpdate(
           { _id: diaryId },
-          { text, date },
+          { diaryText },
           { new: true }
         );
 

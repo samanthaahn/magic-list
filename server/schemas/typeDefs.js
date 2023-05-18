@@ -61,7 +61,7 @@ const typeDefs = gql`
     removeHabit(habitId: ID!): Habit
     removeComment(habitId: ID!, commentId: ID!): Habit
     addDiary(diaryText: String!): User
-    editDiary(diaryId: ID!, text: String!, date: String!): Diary
+    editDiary(diaryId: ID!, diaryText: String!): Diary
     deleteDiary(diaryId: ID!): Diary
     addEvent(title: String!, start: String!, end: String!): User
     editEvent(eventId: ID!, title: String!, start: String!, end: String!): Event
