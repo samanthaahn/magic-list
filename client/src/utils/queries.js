@@ -19,6 +19,10 @@ query me {
       date
       _id
     }
+    habits {
+      habitText
+      _id
+    }
     _id
     email
   }

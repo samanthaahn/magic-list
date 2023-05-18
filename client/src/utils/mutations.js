@@ -53,3 +53,32 @@ mutation Mutation($diaryId: ID!) {
     }
 }
 `
+
+// XXXX XXX XX X
+
+// export const ADD_HABIT = gql`
+// mutation Mutation($habitText: String!) {
+//   addHabitText: $habitText) {
+//     username
+//     habits {
+//       habitText
+//       _id
+//     }
+//   }
+// }
+// `
+// export const EDIT_HABIT = gql`
+// mutation Mutation($habitId: ID!, $habitText: String!) {
+//   editHabit(habitId: $habitId, habitText: $habitText) {
+//       habitText
+//       _id
+//   }
+// }
+// `
+// export const DELETE_HABIT = gql`
+// mutation Mutation($habitId: ID!) {
+//   deleteHabit(habitId: $habitId) {
+//       _id
+//     }
+// }
+// `
