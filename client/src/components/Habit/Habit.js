@@ -107,3 +107,4 @@ function Habit({ title, options }) {
 }
 
 export default Habit;
+
