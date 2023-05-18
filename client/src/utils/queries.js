@@ -20,8 +20,10 @@ query me {
       _id
     }
     habits {
-      habitText
+      category
       _id
+      division
+      habitText
     }
     _id
     email
