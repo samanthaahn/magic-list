@@ -78,8 +78,9 @@ const Diary = () => {
 
 
   return (
-    <div className="journal-container">
+    <div>
       <Navigation />
+    <div className="journal-container">
       <h1 className="journal-title">Good or Bad, write how you're feeling</h1>
       <div className="entry-form">
         <textarea
@@ -90,7 +91,7 @@ const Diary = () => {
           onChange={(e) => setNewEntry(e.target.value)}
         />
         <button onClick={storeEntry} className="add-entry-button">
-          {editIndex !== -1 ? "Update Entry" : "Add Entry"}
+          Add Entry
         </button>
       </div>
       <ul className="entry-list">
@@ -122,6 +123,7 @@ const Diary = () => {
             </li>
           ))}
       </ul>
+    </div>
     </div>
   )
 };
