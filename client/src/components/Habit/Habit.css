@@ -135,13 +135,40 @@
   border-radius: 4px;
 }
 
-.cancel-button,
-.save-button,
-.edit-button,
+.save-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #91B2CA;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #B5DDA4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .complete-button {
   margin-left: 10px;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #91B2CA;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #D69D9A;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -196,7 +223,7 @@
 }
 
 .complete {
-  background-color: lightgreen;
+  background-color: #B5DDA4;
 }
 
 .entry-form.hidden,
@@ -207,7 +234,7 @@
 
 
 .habit-container.saved {
-  background-color: #c8a2c8;
+  background-color: #AE98A1;
 }
 
 .completed-container {
@@ -222,7 +249,7 @@
   text-align: center;
   font-size: 20px;
   color: #fff;
-  background-color: green;
+  background-color: #5CA43D;
   padding: 20px;
   border-radius: 4px;
 }
