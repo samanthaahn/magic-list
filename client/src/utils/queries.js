@@ -10,12 +10,19 @@ export const QUERY_USER = gql`
     }
 `;
 
+// Added Habits below:
+
 export const QUERY_ME = gql`
 query me {
   me {
     username
     diaries {
       diaryText
+      date
+      _id
+    }
+    habits {
+      habitText
       date
       _id
     }
