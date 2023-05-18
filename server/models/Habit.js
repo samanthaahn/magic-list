@@ -6,7 +6,7 @@ const habitSchema = new Schema({
         type: String,
         required: true,
     },
-    class: {
+    division: {
         type: String,
         required: true,
     },
