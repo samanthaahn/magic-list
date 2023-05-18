@@ -53,3 +53,30 @@ mutation Mutation($diaryId: ID!) {
     }
 }
 `
+export const ADD_HABIT = gql`
+mutation Mutation($habitText: String!) {
+  addHabit(habitText: $habitText) {
+    username
+    habits {
+      habitText
+      date
+      _id
+    }
+  }
+}
+`
+export const EDIT_HABIT = gql`
+mutation Mutation($habitId: ID!, $habitText: String!) {
+  editHabit(habitId: $habitId, habitText: $habitText) {
+      habitText
+      _id
+  }
+}
+`
+export const DELETE_HABIT = gql`
+mutation Mutation($habitId: ID!) {
+  deleteHabit(habitId: $habitId) {
+      _id
+    }
+}
+`
