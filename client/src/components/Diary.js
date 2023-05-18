@@ -63,13 +63,14 @@ const Diary = () => {
 
   const updateEntry = async (index) => {
     try {
-      const entryToEdit = diaries.diaries[index];
+      const entryToEdit = diaries.diaries[index]._id;
+      console.log(index)
       await editDiary({
-        variables: { diaryId: entryToEdit._id, diaryText: newEntry },
+        variables: { diaryId: entryToEdit, diaryText: newEntry },
       });
       setNewEntry("");
       setEditIndex(-1);
-      window.location.reload();
+      //window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -99,19 +100,9 @@ const Diary = () => {
               <div className="entry-text-container">
                 <span className="entry-date">{entry.createdAt}</span>
                 <div className="entry-content">
-                  {editIndex !== index ? (
-                    <span className="entry-text" onClick={() => editEntry(index)}>
+                <span className="entry-text" onClick={() => editEntry(index)}>
                       {entry.diaryText}
                     </span>
-                  ) : (
-                    <textarea
-                      type="text"
-                      ref={fieldRef}
-                      className="entry-input"
-                      value={newEntry}
-                      onChange={(e) => setNewEntry(e.target.value)}
-                    />
-                  )}
                 </div>
                 <div className="entry-actions">
                   {editIndex !== index ? (
@@ -119,7 +110,7 @@ const Diary = () => {
                       Edit
                     </button>
                   ) : (
-                    <button onClick={updateEntry} className="update-entry-button">
+                    <button onClick={() => updateEntry(index)} className="update-entry-button">
                       Update
                     </button>
                   )}
