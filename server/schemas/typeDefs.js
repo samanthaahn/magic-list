@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String
     habits: [Habit]!
     diaries: [Diary]
+    events: [Event]
   }
 
   type Habit {
@@ -37,7 +38,7 @@ const typeDefs = gql`
   
   type Event {
     _id: ID
-    title: String
+    eventTitle: String
     start: String
     end: String
   }
@@ -49,6 +50,7 @@ const typeDefs = gql`
     habit(habitId: ID!): Habit
     me: User
     diaries: [Diary]
+    events: [Event]
   }
 
 
@@ -63,8 +65,8 @@ const typeDefs = gql`
     addDiary(diaryText: String!): User
     editDiary(diaryId: ID!, diaryText: String!): Diary
     deleteDiary(diaryId: ID!): Diary
-    addEvent(title: String!, start: String!, end: String!): User
-    editEvent(eventId: ID!, title: String!, start: String!, end: String!): Event
+    addEvent(eventTitle: String!, start: String!, end: String!): User
+    editEvent(eventId: ID!, eventTitle: String!, start: String!, end: String!): Event
     deleteEvent(eventId: ID!): Event
   }
 `;
