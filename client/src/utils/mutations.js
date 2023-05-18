@@ -53,3 +53,11 @@ mutation Mutation($diaryId: ID!) {
     }
 }
 `
+export const ADD_EVENT = gql`
+mutation Mutation($eventTitle: String!, $start: String!, $end: String!) {
+  addEvent(eventTitle: $eventTitle, start: $start, end: $end) {
+    username
+    _id
+  }
+}
+`

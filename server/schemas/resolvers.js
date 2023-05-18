@@ -1,14 +1,14 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Habit, Diary } = require("../models");
+const { User, Habit, Diary, Event } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate("habits").populate("diaries");
+      return User.find().populate("habits").populate("diaries").populate("events");
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("habits").populate("diaries");
+      return User.findOne({ username }).populate("habits").populate("diaries").populate("events");
     },
     habits: async (parent, { username }) => {
       const params = username ? { username } : {};
@@ -21,7 +21,7 @@ const resolvers = {
       console.log('Im in the me function')
       if (context.user) {
         console.log('im in the if')
-        const user = User.findOne({ _id: context.user._id }).populate("habits").populate("diaries");
+        const user = User.findOne({ _id: context.user._id }).populate("habits").populate("diaries").populate("events");
         console.log(user)
         return user
       }
@@ -98,10 +98,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addEvent: async (parent, { title, start, end }, context) => {
+    addEvent: async (parent, { eventTitle, start, end }, context) => {
       if (context.user) {
         const event = await Event.create({
-          title,
+          eventTitle,
           start,
           end,
         });
@@ -110,17 +110,17 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { events: event._id } },
           { new: true }
-        );
+        ).populate("events");
 
         return user;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    editEvent: async (parent, { eventId, title, start, end }, context) => {
+    editEvent: async (parent, { eventId, eventTitle, start, end }, context) => {
       if (context.user) {
         const event = await Event.findOneAndUpdate(
           { _id: eventId },
-          { title, start, end },
+          { eventTitle, start, end },
           { new: true }
         );
 
