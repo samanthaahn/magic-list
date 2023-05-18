@@ -53,6 +53,8 @@ mutation Mutation($diaryId: ID!) {
     }
 }
 `
+
+// New Habit Mutations Below:
 export const ADD_HABIT = gql`
 mutation Mutation($habitText: String!) {
   addHabit(habitText: $habitText) {
