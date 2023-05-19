@@ -19,6 +19,12 @@ query me {
       date
       _id
     }
+    events {
+      _id
+      end
+      eventTitle
+      start
+    }
     habits {
       category
       _id

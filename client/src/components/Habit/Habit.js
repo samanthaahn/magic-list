@@ -100,9 +100,9 @@ function Habit({ title, options, habitText }) {
           <button className="save-button" onClick={handleSave}>
             Save
           </button>
-          <button className="cancel-button" onClick={handleCancel}>
+          {/* <button className="cancel-button" onClick={handleCancel}>
             Cancel
-          </button>
+          </button> */}
         </div>
       )}
 
