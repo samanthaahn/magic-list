@@ -6,7 +6,7 @@ import prj1 from '../../images/calendar6.png';
 import prj2 from '../../images/today5.png';
 import prj3 from '../../images/week5.jpg';
 import prj4 from '../../images/diary3.jpg';
-import './dashboard.css'; // import the CSS file
+import './Dashboard.css'; // import the CSS file
 import {useQuery} from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 
