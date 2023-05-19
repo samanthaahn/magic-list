@@ -24,7 +24,6 @@ const MyCalendar = () => {
   const dataEvents = data?.me.events || [];
 
   useEffect(() => {
-    console.log(dataEvents);
     if (dataEvents.length) {
       const newEvents = dataEvents.map((event) => ({
         start: new Date(parseInt(event.start)).toLocaleDateString(),
@@ -36,7 +35,7 @@ const MyCalendar = () => {
   }, [dataEvents]);
 
   useEffect(() => {
-    console.log(events);
+    // console.log(events);
     // if (events.length > 0){
     //   const newEvents = events.map(event => ({start: event.start, end: event.end, title: event.eventTitle}))
     //   setEvents(newEvents)
@@ -53,7 +52,7 @@ const MyCalendar = () => {
       const parsedEnd = moment(newEvent.end).toDate();
 
       const updatedEvent = { ...newEvent, start: parsedStart, end: parsedEnd };
-
+      console.log(updatedEvent);
       if (selectedEvent) {
         // Editing existing event
         const updatedEvents = events.map((event) =>
@@ -213,9 +212,9 @@ const MyCalendar = () => {
 };
 
 const EventComponent = (props) => {
-  console.log(props);
+  // console.log(props);
   const { eventTitle: title } = props.event;
-  console.log(title);
+  // console.log(title);
   return (
     <div>
       <strong>{title}</strong>
