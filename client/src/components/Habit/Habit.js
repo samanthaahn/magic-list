@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Habit.css';
+import { useMutation } from '@apollo/client';
+import { ADD_HABIT } from '../../utils/mutations';
+import { gql } from '@apollo/client';
 
 function Habit({ title, options, habitText }) {
   const [note, setNote] = useState('');
@@ -16,11 +19,14 @@ function Habit({ title, options, habitText }) {
     setNote(habitText);
   }, [habitText]);
 
+  const [addHabit] = useMutation(ADD_HABIT);
+
   const handleSave = () => {
     if (isEditMode) {
       setIsEditMode(false);
     } else {
       setIsSaved(true);
+      addHabit({ variables: { habitText: note, category: title, division: options[0] } });
     }
   };
 
