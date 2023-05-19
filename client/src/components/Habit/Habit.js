@@ -6,6 +6,7 @@ import { gql } from '@apollo/client';
 
 function Habit({ title, options, habitText }) {
   const [note, setNote] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -15,6 +16,10 @@ function Habit({ title, options, habitText }) {
     setNote(e.target.value);
   };
 
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  }
+
   useEffect(() => {
     setNote(habitText);
   }, [habitText]);
@@ -22,11 +27,12 @@ function Habit({ title, options, habitText }) {
   const [addHabit] = useMutation(ADD_HABIT);
 
   const handleSave = () => {
+    console.log(selectedOption);
     if (isEditMode) {
       setIsEditMode(false);
     } else {
       setIsSaved(true);
-      addHabit({ variables: { habitText: note, category: title, division: options[0] } });
+      addHabit({ variables: { habitText: note, category: title, division: selectedOption } });
     }
   };
 
@@ -48,8 +54,8 @@ function Habit({ title, options, habitText }) {
       <h2 className="habit-title">{title}</h2>
       {/* Dropdown */}
       <div className="dropdown">
-        <select className="dropdown-select">
-          <option value="">Select an option</option>
+        <select className="dropdown-select"onChange={handleOptionChange} value={selectedOption}>
+          <option value=''>Select an option</option>
           {options.map((option, index) => (
             <option key={index} value={option}>
               {option}
