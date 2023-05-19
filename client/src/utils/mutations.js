@@ -63,6 +63,7 @@ mutation Mutation($habitText: String!, $category: String!, $division: String!) {
     category
     division
     habitText
+
   }
 }
 `
