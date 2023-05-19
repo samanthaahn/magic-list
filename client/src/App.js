@@ -68,7 +68,6 @@ function App() {
               <Route path="/week" element={<Week />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/today" element={<Today />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/calendar" element={<MyCalendar />} />
             </Routes>
           </Router>
