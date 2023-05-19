@@ -52,10 +52,10 @@ const resolvers = {
 
       return { token, user };
     },
-    addHabit: async (parent, { habitText }, context) => {
+    addHabit: async (parent, { habitText, category, division }, context) => {
       if (context.user) {
         const habit = await Habit.create({
-          habitText,
+          habitText, category, division 
         });
 
         await User.findOneAndUpdate(
@@ -81,24 +81,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
-      if (context.user) {
-        return Habit.findOneAndUpdate(
-          { _id: habitId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    addEvent: async (parent, { eventTitle, start, end }, context) => {
+    addEvent: async (parent, { title, start, end }, context) => {
       if (context.user) {
         const event = await Event.create({
           eventTitle,
@@ -181,38 +164,6 @@ const resolvers = {
         );
 
         return event;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    removeHabit: async (parent, { habitId }, context) => {
-      if (context.user) {
-        const habit = await Habit.findOneAndDelete({
-          _id: habitId,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { habits: habit._id } }
-        );
-
-        return habit;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    removeComment: async (parent, { habitId, commentId }, context) => {
-      if (context.user) {
-        return Habit.findOneAndUpdate(
-          { _id: habitId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
-          },
-          { new: true }
-        );
       }
       throw new AuthenticationError("You need to be logged in!");
     },

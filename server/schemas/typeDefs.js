@@ -14,8 +14,8 @@ const typeDefs = gql`
   type Habit {
     _id: ID
     habitText: String
-    createdAt: String
-    comments: [Comment]!
+    category: String
+    division: String
   }
 
   type Comment {
@@ -58,10 +58,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addHabit(habitText: String!): Habit
-    addComment(habitId: ID!, commentText: String!): Habit
-    removeHabit(habitId: ID!): Habit
-    removeComment(habitId: ID!, commentId: ID!): Habit
+    addHabit(habitText: String!, category: String!, division: String!): Habit
     addDiary(diaryText: String!): User
     editDiary(diaryId: ID!, diaryText: String!): Diary
     deleteDiary(diaryId: ID!): Diary

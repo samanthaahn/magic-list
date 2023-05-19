@@ -19,11 +19,11 @@ query me {
       date
       _id
     }
-    events {
+    habits {
+      category
       _id
-      end
-      eventTitle
-      start
+      division
+      habitText
     }
     _id
     email
