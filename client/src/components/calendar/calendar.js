@@ -77,7 +77,7 @@ const MyCalendar = () => {
         // Adding new event
         setEvents([...events, updatedEvent]);
       }
-
+//trying to figure this ish out
       setNewEvent({ start: "", end: "", eventTitle: "" });
       setShowForm(false);
     } catch (error) {
