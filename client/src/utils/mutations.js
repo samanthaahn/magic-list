@@ -53,11 +53,17 @@ mutation Mutation($diaryId: ID!) {
     }
 }
 `
-export const ADD_EVENT = gql`
-mutation Mutation($eventTitle: String!, $start: String!, $end: String!) {
-  addEvent(eventTitle: $eventTitle, start: $start, end: $end) {
-    username
+
+// XXXX XXX XX X
+
+export const ADD_HABIT = gql`
+mutation Mutation($habitText: String!, $category: String!, $division: String!) {
+  addHabit(habitText: $habitText, category: $category, division: $division) {
     _id
+    category
+    division
+    habitText
+
   }
 }
 `

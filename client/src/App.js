@@ -8,7 +8,9 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from "./components/Login";
+
 import Dashboard from "./components/Dashboard/dashboard";
+
 import Week from "./components/Week/Week.js";
 import Today from "./components/Today/Today.js";
 import Header from "./components/Header";
